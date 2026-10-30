@@ -1,0 +1,2792 @@
+{
+	"info": {
+		"_postman_id": "5d0c2a3e-7f1b-4b8e-9a41-2b6f3c9e1a27",
+		"name": "Ibyacu Connect Midterm",
+		"description": "Ibyacu Connect Backend - HIRWA MUTEMBEREZI Gad (27338). One request per requirement, named by its ID.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "A2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/{{sr1Id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"{{sr1Id}}"
+					]
+				},
+				"description": "Get one service request by id (CRUD). The full CRUD set is in the folder 'A2 - CRUD for the five entities'."
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Error cases",
+			"item": [
+				{
+					"name": "A2 - 404 unknown id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "One failing request for each requirement that has an error response (404, 400 or 409)."
+		},
+		{
+			"name": "Step 0 - Seed data",
+			"item": [
+				{
+					"name": "Save trade Plumbing",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Plumbing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save trade Carpentry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Carpentry\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save trade Electrical",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Electrical\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save trade Tailoring",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tailoring\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load trade ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (trade) {",
+									"    pm.collectionVariables.set(\"trade\" + trade.name.replace(/\\s/g, \"\") + \"Id\", trade.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save workshop 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 1,\n  \"name\": \"Kimironko Workshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save workshop 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 2,\n  \"name\": \"Remera Workshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save workshop 3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 3,\n  \"name\": \"Nyamirambo Workshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save workshop 4",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 4,\n  \"name\": \"Kicukiro Workshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load workshop ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (workshop) {",
+									"    pm.collectionVariables.set(\"workshop\" + workshop.workshopNumber + \"Id\", workshop.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save artisan Eric",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Eric\",\n  \"lastName\": \"Niyonzima\",\n  \"phone\": \"0788123456\",\n  \"workshop\": {\n    \"id\": \"{{workshop1Id}}\"\n  },\n  \"trades\": [\n    {\n      \"id\": \"{{tradePlumbingId}}\"\n    },\n    {\n      \"id\": \"{{tradeElectricalId}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save artisan Aline",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Aline\",\n  \"lastName\": \"Uwase\",\n  \"phone\": \"0788234567\",\n  \"workshop\": {\n    \"id\": \"{{workshop2Id}}\"\n  },\n  \"trades\": [\n    {\n      \"id\": \"{{tradeCarpentryId}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save artisan Patrick",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Patrick\",\n  \"lastName\": \"Habimana\",\n  \"phone\": \"0788345678\",\n  \"workshop\": {\n    \"id\": \"{{workshop3Id}}\"\n  },\n  \"trades\": [\n    {\n      \"id\": \"{{tradePlumbingId}}\"\n    }\n  ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load artisan ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (artisan) {",
+									"    pm.collectionVariables.set(\"artisan\" + artisan.firstName + \"Id\", artisan.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident Alice",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Alice\",\n  \"lastName\": \"Mugabo\",\n  \"nationalId\": \"1199570023456789\",\n  \"village\": \"Kimironko\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident Jean",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Jean\",\n  \"lastName\": \"Mugabo\",\n  \"nationalId\": \"1198880012345678\",\n  \"village\": \"Remera\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident Grace",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Grace\",\n  \"lastName\": \"Ingabire\",\n  \"nationalId\": \"1200070034567890\",\n  \"village\": \"Kacyiru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident Kevin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Kevin\",\n  \"lastName\": \"Nshimiyimana\",\n  \"nationalId\": \"1199080045678901\",\n  \"village\": \"Gisozi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident Diane",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Diane\",\n  \"lastName\": \"Uwimana\",\n  \"nationalId\": \"1200180056789012\",\n  \"village\": \"Kicukiro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load resident ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (resident) {",
+									"    pm.collectionVariables.set(\"resident\" + resident.firstName + \"Id\", resident.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr1 (FINISHED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-05\",\n  \"status\": \"FINISHED\",\n  \"description\": \"Fix leaking kitchen sink\",\n  \"resident\": {\n    \"id\": \"{{residentAliceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanEricId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr2 (FINISHED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-12\",\n  \"status\": \"FINISHED\",\n  \"description\": \"Replace bathroom tap\",\n  \"resident\": {\n    \"id\": \"{{residentAliceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr3 (ACCEPTED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-20\",\n  \"status\": \"ACCEPTED\",\n  \"description\": \"Install new socket in living room\",\n  \"resident\": {\n    \"id\": \"{{residentGraceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanEricId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr4 (DECLINED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-20\",\n  \"status\": \"DECLINED\",\n  \"description\": \"Repair water heater wiring\",\n  \"resident\": {\n    \"id\": \"{{residentKevinId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanEricId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr5 (FINISHED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-25\",\n  \"status\": \"FINISHED\",\n  \"description\": \"Build wooden wardrobe\",\n  \"resident\": {\n    \"id\": \"{{residentJeanId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanAlineId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr6 (OPEN)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-11-03\",\n  \"status\": \"OPEN\",\n  \"description\": \"Fix broken door frame\",\n  \"resident\": {\n    \"id\": \"{{residentAliceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanAlineId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr7 (OPEN)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-11-05\",\n  \"status\": \"OPEN\",\n  \"description\": \"Unblock drainage pipe\",\n  \"resident\": {\n    \"id\": \"{{residentDianeId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr8 (ACCEPTED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-11-10\",\n  \"status\": \"ACCEPTED\",\n  \"description\": \"Rewire kitchen lights\",\n  \"resident\": {\n    \"id\": \"{{residentJeanId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanEricId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr9 (OPEN)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-11-15\",\n  \"status\": \"OPEN\",\n  \"description\": \"Make kitchen shelves\",\n  \"resident\": {\n    \"id\": \"{{residentGraceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanAlineId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request sr10 (DECLINED)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-11-20\",\n  \"status\": \"DECLINED\",\n  \"description\": \"Install water tank\",\n  \"resident\": {\n    \"id\": \"{{residentDianeId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load service request ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var names = {",
+									"    \"Fix leaking kitchen sink\": \"sr1Id\",",
+									"    \"Replace bathroom tap\": \"sr2Id\",",
+									"    \"Install new socket in living room\": \"sr3Id\",",
+									"    \"Repair water heater wiring\": \"sr4Id\",",
+									"    \"Build wooden wardrobe\": \"sr5Id\",",
+									"    \"Fix broken door frame\": \"sr6Id\",",
+									"    \"Unblock drainage pipe\": \"sr7Id\",",
+									"    \"Rewire kitchen lights\": \"sr8Id\",",
+									"    \"Make kitchen shelves\": \"sr9Id\",",
+									"    \"Install water tank\": \"sr10Id\",",
+									"    \"Temporary request\": \"srTempId\"",
+									"};",
+									"pm.response.json().forEach(function (serviceRequest) {",
+									"    var variable = names[serviceRequest.description];",
+									"    if (variable) {",
+									"        pm.collectionVariables.set(variable, serviceRequest.id);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Run this folder ONCE, in order, with the Collection Runner, right after Part A2 is working and before Part D is added (Part D blocks dates in the past)."
+		},
+		{
+			"name": "Load ids",
+			"item": [
+				{
+					"name": "Load trade ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (trade) {",
+									"    pm.collectionVariables.set(\"trade\" + trade.name.replace(/\\s/g, \"\") + \"Id\", trade.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load workshop ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (workshop) {",
+									"    pm.collectionVariables.set(\"workshop\" + workshop.workshopNumber + \"Id\", workshop.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load artisan ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (artisan) {",
+									"    pm.collectionVariables.set(\"artisan\" + artisan.firstName + \"Id\", artisan.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load resident ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (resident) {",
+									"    pm.collectionVariables.set(\"resident\" + resident.firstName + \"Id\", resident.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Load service request ids",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var names = {",
+									"    \"Fix leaking kitchen sink\": \"sr1Id\",",
+									"    \"Replace bathroom tap\": \"sr2Id\",",
+									"    \"Install new socket in living room\": \"sr3Id\",",
+									"    \"Repair water heater wiring\": \"sr4Id\",",
+									"    \"Build wooden wardrobe\": \"sr5Id\",",
+									"    \"Fix broken door frame\": \"sr6Id\",",
+									"    \"Unblock drainage pipe\": \"sr7Id\",",
+									"    \"Rewire kitchen lights\": \"sr8Id\",",
+									"    \"Make kitchen shelves\": \"sr9Id\",",
+									"    \"Install water tank\": \"sr10Id\",",
+									"    \"Temporary request\": \"srTempId\"",
+									"};",
+									"pm.response.json().forEach(function (serviceRequest) {",
+									"    var variable = names[serviceRequest.description];",
+									"    if (variable) {",
+									"        pm.collectionVariables.set(variable, serviceRequest.id);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Run this folder after every import of the collection. It reads the ids from the database and stores them in collection variables."
+		},
+		{
+			"name": "A2 - CRUD for the five entities",
+			"item": [
+				{
+					"name": "Save trade",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Masonry\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get all trades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (trade) {",
+									"    pm.collectionVariables.set(\"trade\" + trade.name.replace(/\\s/g, \"\") + \"Id\", trade.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get trade by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/{{tradeMasonryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"{{tradeMasonryId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update trade",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/update/{{tradeMasonryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"update",
+								"{{tradeMasonryId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Masonry\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete trade",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/trades/delete/{{tradeMasonryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"trades",
+								"delete",
+								"{{tradeMasonryId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save workshop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 5,\n  \"name\": \"Temporary Workshop\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get all workshops",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (workshop) {",
+									"    pm.collectionVariables.set(\"workshop\" + workshop.workshopNumber + \"Id\", workshop.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get workshop by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/{{workshop5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"{{workshop5Id}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update workshop",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/update/{{workshop5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"update",
+								"{{workshop5Id}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"workshopNumber\": 5,\n  \"name\": \"Temporary Workshop B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete workshop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/workshops/delete/{{workshop5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"workshops",
+								"delete",
+								"{{workshop5Id}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save artisan",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Temp\",\n  \"lastName\": \"Artisan\",\n  \"phone\": \"0788000000\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get all artisans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (artisan) {",
+									"    pm.collectionVariables.set(\"artisan\" + artisan.firstName + \"Id\", artisan.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get artisan by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/{{artisanTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"{{artisanTempId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update artisan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/update/{{artisanTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"update",
+								"{{artisanTempId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Temp\",\n  \"lastName\": \"Artisan\",\n  \"phone\": \"0788000001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete artisan",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/delete/{{artisanTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"delete",
+								"{{artisanTempId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save resident",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Resident\",\n  \"nationalId\": \"1000000000000001\",\n  \"village\": \"Gikondo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get all residents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.response.json().forEach(function (resident) {",
+									"    pm.collectionVariables.set(\"resident\" + resident.firstName + \"Id\", resident.id);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get resident by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/{{residentTestId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"{{residentTestId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update resident",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/update/{{residentTestId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"update",
+								"{{residentTestId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Test\",\n  \"lastName\": \"Resident\",\n  \"nationalId\": \"1000000000000001\",\n  \"village\": \"Nyamirambo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete resident",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/delete/{{residentTestId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"delete",
+								"{{residentTestId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Save service request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-12-20\",\n  \"status\": \"OPEN\",\n  \"description\": \"Temporary request\",\n  \"resident\": {\n    \"id\": \"{{residentAliceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanAlineId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get all service requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"all"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"var names = {",
+									"    \"Fix leaking kitchen sink\": \"sr1Id\",",
+									"    \"Replace bathroom tap\": \"sr2Id\",",
+									"    \"Install new socket in living room\": \"sr3Id\",",
+									"    \"Repair water heater wiring\": \"sr4Id\",",
+									"    \"Build wooden wardrobe\": \"sr5Id\",",
+									"    \"Fix broken door frame\": \"sr6Id\",",
+									"    \"Unblock drainage pipe\": \"sr7Id\",",
+									"    \"Rewire kitchen lights\": \"sr8Id\",",
+									"    \"Make kitchen shelves\": \"sr9Id\",",
+									"    \"Install water tank\": \"sr10Id\",",
+									"    \"Temporary request\": \"srTempId\"",
+									"};",
+									"pm.response.json().forEach(function (serviceRequest) {",
+									"    var variable = names[serviceRequest.description];",
+									"    if (variable) {",
+									"        pm.collectionVariables.set(variable, serviceRequest.id);",
+									"    }",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Get service request by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{srTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{srTempId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Update service request",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/update/{{srTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"update",
+								"{{srTempId}}"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-12-21\",\n  \"status\": \"OPEN\",\n  \"description\": \"Temporary request\",\n  \"resident\": {\n    \"id\": \"{{residentAliceId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanAlineId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete service request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/delete/{{srTempId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"delete",
+								"{{srTempId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Save, list, get, update and delete a temporary record of each entity. Run the whole folder in order; the last request of each group deletes the temporary record so the seed data stays as Step 0 requires."
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "tradePlumbingId",
+			"value": ""
+		},
+		{
+			"key": "tradeCarpentryId",
+			"value": ""
+		},
+		{
+			"key": "tradeElectricalId",
+			"value": ""
+		},
+		{
+			"key": "tradeTailoringId",
+			"value": ""
+		},
+		{
+			"key": "tradeMasonryId",
+			"value": ""
+		},
+		{
+			"key": "workshop1Id",
+			"value": ""
+		},
+		{
+			"key": "workshop2Id",
+			"value": ""
+		},
+		{
+			"key": "workshop3Id",
+			"value": ""
+		},
+		{
+			"key": "workshop4Id",
+			"value": ""
+		},
+		{
+			"key": "workshop5Id",
+			"value": ""
+		},
+		{
+			"key": "artisanEricId",
+			"value": ""
+		},
+		{
+			"key": "artisanAlineId",
+			"value": ""
+		},
+		{
+			"key": "artisanPatrickId",
+			"value": ""
+		},
+		{
+			"key": "artisanTempId",
+			"value": ""
+		},
+		{
+			"key": "residentAliceId",
+			"value": ""
+		},
+		{
+			"key": "residentJeanId",
+			"value": ""
+		},
+		{
+			"key": "residentGraceId",
+			"value": ""
+		},
+		{
+			"key": "residentKevinId",
+			"value": ""
+		},
+		{
+			"key": "residentDianeId",
+			"value": ""
+		},
+		{
+			"key": "residentTestId",
+			"value": ""
+		},
+		{
+			"key": "sr1Id",
+			"value": ""
+		},
+		{
+			"key": "sr2Id",
+			"value": ""
+		},
+		{
+			"key": "sr3Id",
+			"value": ""
+		},
+		{
+			"key": "sr4Id",
+			"value": ""
+		},
+		{
+			"key": "sr5Id",
+			"value": ""
+		},
+		{
+			"key": "sr6Id",
+			"value": ""
+		},
+		{
+			"key": "sr7Id",
+			"value": ""
+		},
+		{
+			"key": "sr8Id",
+			"value": ""
+		},
+		{
+			"key": "sr9Id",
+			"value": ""
+		},
+		{
+			"key": "sr10Id",
+			"value": ""
+		},
+		{
+			"key": "srTempId",
+			"value": ""
+		},
+		{
+			"key": "workReportId",
+			"value": ""
+		}
+	]
+}
