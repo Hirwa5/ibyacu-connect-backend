@@ -1,5 +1,6 @@
 package com.auca.ibyacu_connect.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auca.ibyacu_connect.model.RequestStatus;
 import com.auca.ibyacu_connect.model.ServiceRequest;
 import com.auca.ibyacu_connect.service.ServiceRequestService;
 
@@ -62,5 +65,17 @@ public class ServiceRequestController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-status")
+    public ResponseEntity<List<ServiceRequest>> getServiceRequestsByStatus(@RequestParam RequestStatus status) {
+        return new ResponseEntity<>(serviceRequestService.getServiceRequestsByStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/between")
+    public ResponseEntity<List<ServiceRequest>> getServiceRequestsBetween(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(serviceRequestService.getServiceRequestsBetween(startDate, endDate), HttpStatus.OK);
     }
 }

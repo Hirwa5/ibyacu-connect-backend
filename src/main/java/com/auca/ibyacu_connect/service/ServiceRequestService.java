@@ -1,5 +1,6 @@
 package com.auca.ibyacu_connect.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -7,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.auca.ibyacu_connect.model.RequestStatus;
 import com.auca.ibyacu_connect.model.ServiceRequest;
 import com.auca.ibyacu_connect.repository.ServiceRequestRepository;
 
@@ -50,5 +52,13 @@ public class ServiceRequestService {
         }
         serviceRequestRepository.deleteById(id);
         return "Service request deleted successfully";
+    }
+
+    public List<ServiceRequest> getServiceRequestsByStatus(RequestStatus status) {
+        return serviceRequestRepository.findByStatusOrderByRequestDateAsc(status);
+    }
+
+    public List<ServiceRequest> getServiceRequestsBetween(LocalDate start, LocalDate end) {
+        return serviceRequestRepository.findByRequestDateBetweenOrderByRequestDateAsc(start, end);
     }
 }

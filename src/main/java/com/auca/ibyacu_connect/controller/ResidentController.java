@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auca.ibyacu_connect.model.Resident;
@@ -62,5 +63,10 @@ public class ResidentController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-last-name")
+    public ResponseEntity<List<Resident>> getResidentsByLastName(@RequestParam String lastName) {
+        return new ResponseEntity<>(residentService.getResidentsByLastName(lastName), HttpStatus.OK);
     }
 }

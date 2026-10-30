@@ -50,4 +50,8 @@ public class ResidentService {
         residentRepository.deleteById(id);
         return "Resident deleted successfully";
     }
+
+    public List<Resident> getResidentsByLastName(String lastName) {
+        return residentRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }

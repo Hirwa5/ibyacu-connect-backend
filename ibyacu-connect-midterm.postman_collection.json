@@ -40,6 +40,124 @@
 			]
 		},
 		{
+			"name": "B1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/residents/by-last-name?lastName=mugabo",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"residents",
+						"by-last-name"
+					],
+					"query": [
+						{
+							"key": "lastName",
+							"value": "mugabo"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "B2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/by-status?status=OPEN",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"by-status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "OPEN"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "B3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/between?start=2026-10-01&end=2026-10-31",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"between"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2026-10-01"
+						},
+						{
+							"key": "end",
+							"value": "2026-10-31"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Error cases",
 			"item": [
 				{
