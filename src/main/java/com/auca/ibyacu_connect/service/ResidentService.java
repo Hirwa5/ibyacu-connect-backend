@@ -54,4 +54,8 @@ public class ResidentService {
     public List<Resident> getResidentsByLastName(String lastName) {
         return residentRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
     }
+
+    public List<Resident> getResidentsOfArtisan(UUID artisanId) {
+        return residentRepository.findResidentsOfArtisan(artisanId);
+    }
 }

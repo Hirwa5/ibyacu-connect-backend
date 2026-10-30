@@ -47,4 +47,8 @@ public class TradeService {
         tradeRepository.deleteById(id);
         return "Trade deleted successfully";
     }
+
+    public List<Trade> getUnusedTrades() {
+        return tradeRepository.findUnusedTrades();
+    }
 }

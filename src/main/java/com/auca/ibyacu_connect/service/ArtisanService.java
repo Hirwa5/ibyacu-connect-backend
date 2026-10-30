@@ -49,4 +49,8 @@ public class ArtisanService {
         artisanRepository.deleteById(id);
         return "Artisan deleted successfully";
     }
+
+    public List<Artisan> getArtisansByTrade(String name) {
+        return artisanRepository.findArtisansByTrade(name);
+    }
 }

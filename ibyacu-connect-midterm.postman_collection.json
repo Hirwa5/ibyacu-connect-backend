@@ -158,6 +158,141 @@
 			]
 		},
 		{
+			"name": "C1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/artisans/by-trade?name=plumbing",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"artisans",
+						"by-trade"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "plumbing"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "C2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/workshops/free",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"workshops",
+						"free"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "C3",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/trades/unused",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"trades",
+						"unused"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "C4",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/residents/of-artisan/{{artisanEricId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"residents",
+						"of-artisan",
+						"{{artisanEricId}}"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Error cases",
 			"item": [
 				{
@@ -173,6 +308,39 @@
 							"path": [
 								"api",
 								"service-requests",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "C4 - 404 unknown artisan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/residents/of-artisan/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"residents",
+								"of-artisan",
 								"00000000-0000-0000-0000-000000000000"
 							]
 						}

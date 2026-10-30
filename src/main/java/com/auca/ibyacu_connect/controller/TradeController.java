@@ -63,4 +63,9 @@ public class TradeController {
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @GetMapping("/unused")
+    public ResponseEntity<List<Trade>> getUnusedTrades() {
+        return new ResponseEntity<>(tradeService.getUnusedTrades(), HttpStatus.OK);
+    }
 }

@@ -48,4 +48,8 @@ public class WorkshopService {
         workshopRepository.deleteById(id);
         return "Workshop deleted successfully";
     }
+
+    public List<Workshop> getFreeWorkshops() {
+        return workshopRepository.findFreeWorkshops();
+    }
 }

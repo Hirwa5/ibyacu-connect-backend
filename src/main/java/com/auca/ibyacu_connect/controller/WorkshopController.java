@@ -63,4 +63,9 @@ public class WorkshopController {
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @GetMapping("/free")
+    public ResponseEntity<List<Workshop>> getFreeWorkshops() {
+        return new ResponseEntity<>(workshopService.getFreeWorkshops(), HttpStatus.OK);
+    }
 }

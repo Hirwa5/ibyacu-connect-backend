@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.auca.ibyacu_connect.model.Artisan;
@@ -62,5 +63,10 @@ public class ArtisanController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-trade")
+    public ResponseEntity<List<Artisan>> getArtisansByTrade(@RequestParam String name) {
+        return new ResponseEntity<>(artisanService.getArtisansByTrade(name), HttpStatus.OK);
     }
 }

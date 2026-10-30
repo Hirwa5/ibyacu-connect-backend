@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auca.ibyacu_connect.model.Artisan;
 import com.auca.ibyacu_connect.model.Resident;
+import com.auca.ibyacu_connect.service.ArtisanService;
 import com.auca.ibyacu_connect.service.ResidentService;
 
 @RestController
@@ -26,6 +28,9 @@ public class ResidentController {
 
     @Autowired
     private ResidentService residentService;
+
+    @Autowired
+    private ArtisanService artisanService;
 
     @PostMapping("/save")
     public ResponseEntity<String> saveResident(@RequestBody Resident resident) {
@@ -68,5 +73,14 @@ public class ResidentController {
     @GetMapping("/by-last-name")
     public ResponseEntity<List<Resident>> getResidentsByLastName(@RequestParam String lastName) {
         return new ResponseEntity<>(residentService.getResidentsByLastName(lastName), HttpStatus.OK);
+    }
+
+    @GetMapping("/of-artisan/{artisanId}")
+    public ResponseEntity<?> getResidentsOfArtisan(@PathVariable UUID artisanId) {
+        Optional<Artisan> artisan = artisanService.getArtisanById(artisanId);
+        if (artisan.isEmpty()) {
+            return new ResponseEntity<>("The artisan with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(residentService.getResidentsOfArtisan(artisanId), HttpStatus.OK);
     }
 }
