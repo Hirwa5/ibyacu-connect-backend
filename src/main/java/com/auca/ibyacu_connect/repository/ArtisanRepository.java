@@ -9,11 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.auca.ibyacu_connect.model.Artisan;
+import com.auca.ibyacu_connect.model.Workshop;
 
 @Repository
 public interface ArtisanRepository extends JpaRepository<Artisan, UUID> {
 
     @Query("SELECT a FROM Artisan a JOIN a.trades t WHERE LOWER(t.name) = LOWER(:name)")
     List<Artisan> findArtisansByTrade(@Param("name") String name);
+
+    boolean existsByWorkshop(Workshop workshop);
 
 }

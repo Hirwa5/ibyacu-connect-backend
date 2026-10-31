@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.auca.ibyacu_connect.model.Artisan;
 import com.auca.ibyacu_connect.model.RequestStatus;
 import com.auca.ibyacu_connect.model.ServiceRequest;
 
@@ -16,5 +17,7 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
     List<ServiceRequest> findByStatusOrderByRequestDateAsc(RequestStatus status);
 
     List<ServiceRequest> findByRequestDateBetweenOrderByRequestDateAsc(LocalDate start, LocalDate end);
+
+    boolean existsByArtisanAndRequestDateAndStatusNot(Artisan artisan, LocalDate requestDate, RequestStatus status);
 
 }

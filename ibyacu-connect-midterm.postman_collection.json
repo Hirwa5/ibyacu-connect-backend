@@ -293,6 +293,166 @@
 			]
 		},
 		{
+			"name": "D1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/save",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"save"
+					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"requestDate\": \"2026-12-15\",\n  \"status\": \"FINISHED\",\n  \"description\": \"Repair roof gutter\",\n  \"resident\": {\n    \"id\": \"{{residentKevinId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"description": "Saved as OPEN even though the body says FINISHED. Send it a second time to get 409."
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "D2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/{{sr6Id}}/status?status=ACCEPTED",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"{{sr6Id}}",
+						"status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "ACCEPTED"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "D3",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/artisans/{{artisanPatrickId}}/trades/{{tradeCarpentryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"artisans",
+						"{{artisanPatrickId}}",
+						"trades",
+						"{{tradeCarpentryId}}"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "D4",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/artisans/{{artisanAlineId}}/workshop?workshopNumber=4",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"artisans",
+						"{{artisanAlineId}}",
+						"workshop"
+					],
+					"query": [
+						{
+							"key": "workshopNumber",
+							"value": "4"
+						}
+					]
+				},
+				"description": "Aline moves from workshop 2 to workshop 4. Afterwards C2 returns workshop 2."
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Error cases",
 			"item": [
 				{
@@ -342,6 +502,323 @@
 								"residents",
 								"of-artisan",
 								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D1 - 400 date in the past",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-10-01\",\n  \"status\": \"OPEN\",\n  \"description\": \"Request in the past\",\n  \"resident\": {\n    \"id\": \"{{residentKevinId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D1 - 409 artisan already booked",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/save",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"save"
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"requestDate\": \"2026-12-15\",\n  \"status\": \"OPEN\",\n  \"description\": \"Second request on a booked day\",\n  \"resident\": {\n    \"id\": \"{{residentDianeId}}\"\n  },\n  \"artisan\": {\n    \"id\": \"{{artisanPatrickId}}\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"description": "Run D1 first so Patrick has an OPEN request on 2026-12-15."
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D2 - 400 FINISHED to OPEN",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/{{sr1Id}}/status?status=OPEN",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"{{sr1Id}}",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "OPEN"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D2 - 404 unknown id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/00000000-0000-0000-0000-000000000000/status?status=ACCEPTED",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"00000000-0000-0000-0000-000000000000",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ACCEPTED"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D3 - 409 artisan already has trade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/{{artisanEricId}}/trades/{{tradePlumbingId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"{{artisanEricId}}",
+								"trades",
+								"{{tradePlumbingId}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D3 - 404 unknown trade",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/{{artisanEricId}}/trades/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"{{artisanEricId}}",
+								"trades",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D4 - 409 workshop taken",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/{{artisanEricId}}/workshop?workshopNumber=3",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"{{artisanEricId}}",
+								"workshop"
+							],
+							"query": [
+								{
+									"key": "workshopNumber",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.response.to.have.status(409);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "D4 - 404 unknown workshop number",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/artisans/{{artisanEricId}}/workshop?workshopNumber=99",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"artisans",
+								"{{artisanEricId}}",
+								"workshop"
+							],
+							"query": [
+								{
+									"key": "workshopNumber",
+									"value": "99"
+								}
 							]
 						}
 					},

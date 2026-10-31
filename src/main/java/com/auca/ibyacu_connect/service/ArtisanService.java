@@ -8,13 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.auca.ibyacu_connect.model.Artisan;
+import com.auca.ibyacu_connect.model.Trade;
+import com.auca.ibyacu_connect.model.Workshop;
 import com.auca.ibyacu_connect.repository.ArtisanRepository;
+import com.auca.ibyacu_connect.repository.TradeRepository;
+import com.auca.ibyacu_connect.repository.WorkshopRepository;
 
 @Service
 public class ArtisanService {
 
     @Autowired
     private ArtisanRepository artisanRepository;
+
+    @Autowired
+    private TradeRepository tradeRepository;
+
+    @Autowired
+    private WorkshopRepository workshopRepository;
 
     public String saveArtisan(Artisan artisan) {
         artisanRepository.save(artisan);
@@ -52,5 +62,43 @@ public class ArtisanService {
 
     public List<Artisan> getArtisansByTrade(String name) {
         return artisanRepository.findArtisansByTrade(name);
+    }
+
+    public String addTradeToArtisan(UUID artisanId, UUID tradeId) {
+        Optional<Artisan> foundArtisan = artisanRepository.findById(artisanId);
+        if (foundArtisan.isEmpty()) {
+            return "The artisan with that id does not exist";
+        }
+        Optional<Trade> foundTrade = tradeRepository.findById(tradeId);
+        if (foundTrade.isEmpty()) {
+            return "That trade does not exist";
+        }
+        Artisan artisan = foundArtisan.get();
+        Trade trade = foundTrade.get();
+        if (artisan.getTrades().contains(trade)) {
+            return "The artisan already has that trade";
+        }
+        artisan.getTrades().add(trade);
+        artisanRepository.save(artisan);
+        return "Trade added to the artisan";
+    }
+
+    public String changeWorkshop(UUID artisanId, int workshopNumber) {
+        Optional<Artisan> foundArtisan = artisanRepository.findById(artisanId);
+        if (foundArtisan.isEmpty()) {
+            return "The artisan with that id does not exist";
+        }
+        Optional<Workshop> foundWorkshop = workshopRepository.findByWorkshopNumber(workshopNumber);
+        if (foundWorkshop.isEmpty()) {
+            return "The workshop with that workshopNumber does not exist";
+        }
+        Workshop workshop = foundWorkshop.get();
+        if (artisanRepository.existsByWorkshop(workshop)) {
+            return "That workshop is taken by another artisan";
+        }
+        Artisan artisan = foundArtisan.get();
+        artisan.setWorkshop(workshop);
+        artisanRepository.save(artisan);
+        return "Workshop changed successfully";
     }
 }

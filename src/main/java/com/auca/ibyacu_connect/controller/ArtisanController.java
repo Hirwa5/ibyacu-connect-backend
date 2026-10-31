@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -68,5 +69,30 @@ public class ArtisanController {
     @GetMapping("/by-trade")
     public ResponseEntity<List<Artisan>> getArtisansByTrade(@RequestParam String name) {
         return new ResponseEntity<>(artisanService.getArtisansByTrade(name), HttpStatus.OK);
+    }
+
+    @PutMapping("/{artisanId}/trades/{tradeId}")
+    public ResponseEntity<String> addTradeToArtisan(@PathVariable UUID artisanId, @PathVariable UUID tradeId) {
+        String message = artisanService.addTradeToArtisan(artisanId, tradeId);
+        if (message.equals("The artisan with that id does not exist") || message.equals("That trade does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        if (message.equals("The artisan already has that trade")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @PatchMapping("/{artisanId}/workshop")
+    public ResponseEntity<String> changeWorkshop(@PathVariable UUID artisanId, @RequestParam int workshopNumber) {
+        String message = artisanService.changeWorkshop(artisanId, workshopNumber);
+        if (message.equals("The artisan with that id does not exist")
+                || message.equals("The workshop with that workshopNumber does not exist")) {
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+        if (message.equals("That workshop is taken by another artisan")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

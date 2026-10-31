@@ -19,6 +19,15 @@ public class ServiceRequestService {
     private ServiceRequestRepository serviceRequestRepository;
 
     public String saveServiceRequest(ServiceRequest serviceRequest) {
+        if (serviceRequest.getRequestDate().isBefore(LocalDate.now())) {
+            return "Service request date cannot be in the past";
+        }
+        boolean booked = serviceRequestRepository.existsByArtisanAndRequestDateAndStatusNot(
+                serviceRequest.getArtisan(), serviceRequest.getRequestDate(), RequestStatus.DECLINED);
+        if (booked) {
+            return "Artisan is already booked on that date";
+        }
+        serviceRequest.setStatus(RequestStatus.OPEN);
         serviceRequestRepository.save(serviceRequest);
         return "Service request saved successfully";
     }
@@ -38,7 +47,6 @@ public class ServiceRequestService {
         }
         ServiceRequest savedRequest = existing.get();
         savedRequest.setRequestDate(serviceRequest.getRequestDate());
-        savedRequest.setStatus(serviceRequest.getStatus());
         savedRequest.setDescription(serviceRequest.getDescription());
         savedRequest.setResident(serviceRequest.getResident());
         savedRequest.setArtisan(serviceRequest.getArtisan());
@@ -60,5 +68,30 @@ public class ServiceRequestService {
 
     public List<ServiceRequest> getServiceRequestsBetween(LocalDate start, LocalDate end) {
         return serviceRequestRepository.findByRequestDateBetweenOrderByRequestDateAsc(start, end);
+    }
+
+    public String updateStatus(UUID id, RequestStatus newStatus) {
+        Optional<ServiceRequest> existing = serviceRequestRepository.findById(id);
+        if (existing.isEmpty()) {
+            return "The service request with that id does not exist";
+        }
+        ServiceRequest serviceRequest = existing.get();
+        RequestStatus currentStatus = serviceRequest.getStatus();
+        boolean allowed = false;
+        if (currentStatus == RequestStatus.OPEN) {
+            if (newStatus == RequestStatus.ACCEPTED || newStatus == RequestStatus.DECLINED) {
+                allowed = true;
+            }
+        } else if (currentStatus == RequestStatus.ACCEPTED) {
+            if (newStatus == RequestStatus.FINISHED || newStatus == RequestStatus.DECLINED) {
+                allowed = true;
+            }
+        }
+        if (!allowed) {
+            return "Cannot change status from " + currentStatus + " to " + newStatus;
+        }
+        serviceRequest.setStatus(newStatus);
+        serviceRequestRepository.save(serviceRequest);
+        return "Service request status updated successfully";
     }
 }
