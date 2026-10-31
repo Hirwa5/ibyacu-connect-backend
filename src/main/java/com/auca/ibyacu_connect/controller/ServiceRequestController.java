@@ -71,6 +71,9 @@ public class ServiceRequestController {
         if (message.equals("The service request with that id does not exist")) {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
+        if (message.equals("That service request has work reports, delete them first")) {
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

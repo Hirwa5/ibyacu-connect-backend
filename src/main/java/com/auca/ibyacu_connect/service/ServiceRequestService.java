@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import com.auca.ibyacu_connect.model.RequestStatus;
 import com.auca.ibyacu_connect.model.ServiceRequest;
 import com.auca.ibyacu_connect.repository.ServiceRequestRepository;
+import com.auca.ibyacu_connect.repository.WorkReportRepository;
 
 @Service
 public class ServiceRequestService {
 
     @Autowired
     private ServiceRequestRepository serviceRequestRepository;
+
+    @Autowired
+    private WorkReportRepository workReportRepository;
 
     public String saveServiceRequest(ServiceRequest serviceRequest) {
         if (serviceRequest.getRequestDate().isBefore(LocalDate.now())) {
@@ -55,8 +59,12 @@ public class ServiceRequestService {
     }
 
     public String deleteServiceRequest(UUID id) {
-        if (!serviceRequestRepository.existsById(id)) {
+        Optional<ServiceRequest> existing = serviceRequestRepository.findById(id);
+        if (existing.isEmpty()) {
             return "The service request with that id does not exist";
+        }
+        if (workReportRepository.existsByServiceRequest(existing.get())) {
+            return "That service request has work reports, delete them first";
         }
         serviceRequestRepository.deleteById(id);
         return "Service request deleted successfully";

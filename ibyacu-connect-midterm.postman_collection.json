@@ -453,6 +453,129 @@
 			]
 		},
 		{
+			"name": "E1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr1Id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"work-reports",
+						"save"
+					],
+					"query": [
+						{
+							"key": "serviceRequestId",
+							"value": "{{sr1Id}}"
+						}
+					]
+				},
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"taskName\": \"Pipe replacement\",\n  \"summary\": \"Replaced the kitchen inlet pipe\",\n  \"hoursSpent\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "E2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/work-reports/resident/1199570023456789",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"work-reports",
+						"resident",
+						"1199570023456789"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"var reports = pm.response.json();",
+							"if (reports.length > 0) {",
+							"    pm.collectionVariables.set(\"workReportId\", reports[0].id);",
+							"}"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "E3",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/work-reports/delete/{{workReportId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"work-reports",
+						"delete",
+						"{{workReportId}}"
+					]
+				},
+				"description": "Deletes the first work report returned by E2. Run E2 first."
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Error cases",
 			"item": [
 				{
@@ -831,6 +954,176 @@
 								"exec": [
 									"pm.test(\"Status code is 404\", function () {",
 									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "E1 - 400 request not FINISHED",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr7Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr7Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Pipe replacement\",\n  \"summary\": \"Replaced the kitchen inlet pipe\",\n  \"hoursSpent\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "E1 - 404 unknown request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId=00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "00000000-0000-0000-0000-000000000000"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Pipe replacement\",\n  \"summary\": \"Replaced the kitchen inlet pipe\",\n  \"hoursSpent\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "E3 - 404 unknown work report",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/delete/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"delete",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "E3 - 409 request has work reports",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/service-requests/delete/{{sr5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"service-requests",
+								"delete",
+								"{{sr5Id}}"
+							]
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {",
+									"    pm.response.to.have.status(409);",
 									"});"
 								]
 							}
@@ -3416,6 +3709,272 @@
 				}
 			],
 			"description": "Save, list, get, update and delete a temporary record of each entity. Run the whole folder in order; the last request of each group deletes the temporary record so the seed data stays as Step 0 requires."
+		},
+		{
+			"name": "Step E - more work reports",
+			"item": [
+				{
+					"name": "Work report for sr1: Leak test",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr1Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr1Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Leak test\",\n  \"summary\": \"Checked all joints under the sink for leaks\",\n  \"hoursSpent\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Work report for sr2: Tap removal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr2Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr2Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Tap removal\",\n  \"summary\": \"Removed the old bathroom tap\",\n  \"hoursSpent\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Work report for sr2: Tap fitting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr2Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr2Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Tap fitting\",\n  \"summary\": \"Fitted and sealed the new tap\",\n  \"hoursSpent\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Work report for sr5: Frame assembly",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr5Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Frame assembly\",\n  \"summary\": \"Cut and assembled the wardrobe frame\",\n  \"hoursSpent\": 6\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Work report for sr5: Doors and finishing",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/work-reports/save?serviceRequestId={{sr5Id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"work-reports",
+								"save"
+							],
+							"query": [
+								{
+									"key": "serviceRequestId",
+									"value": "{{sr5Id}}"
+								}
+							]
+						},
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"taskName\": \"Doors and finishing\",\n  \"summary\": \"Fitted the doors and varnished the wardrobe\",\n  \"hoursSpent\": 4\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						}
+					},
+					"response": [],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								]
+							}
+						}
+					]
+				}
+			],
+			"description": "Five more work reports for the FINISHED requests sr1, sr2 and sr5. Run once after E1."
 		}
 	],
 	"variable": [
