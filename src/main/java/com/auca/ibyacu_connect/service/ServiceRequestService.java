@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.auca.ibyacu_connect.model.RequestStatus;
 import com.auca.ibyacu_connect.model.ServiceRequest;
@@ -101,5 +102,15 @@ public class ServiceRequestService {
         serviceRequest.setStatus(newStatus);
         serviceRequestRepository.save(serviceRequest);
         return "Service request status updated successfully";
+    }
+
+    public List<Object[]> getCountPerStatus() {
+        return serviceRequestRepository.countServiceRequestsPerStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID artisanId, LocalDate date) {
+        int cancelled = serviceRequestRepository.cancelDay(artisanId, date);
+        return cancelled + " service requests cancelled";
     }
 }

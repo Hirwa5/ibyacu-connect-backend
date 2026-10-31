@@ -576,6 +576,81 @@
 			]
 		},
 		{
+			"name": "F1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/stats/by-status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"stats",
+						"by-status"
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "F2",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/service-requests/cancel-day?artisanId={{artisanEricId}}&date=2026-10-20",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"service-requests",
+						"cancel-day"
+					],
+					"query": [
+						{
+							"key": "artisanId",
+							"value": "{{artisanEricId}}"
+						},
+						{
+							"key": "date",
+							"value": "2026-10-20"
+						}
+					]
+				}
+			},
+			"response": [],
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Error cases",
 			"item": [
 				{

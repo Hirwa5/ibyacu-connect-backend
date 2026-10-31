@@ -100,4 +100,16 @@ public class ServiceRequestController {
         }
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> getCountPerStatus() {
+        return new ResponseEntity<>(serviceRequestService.getCountPerStatus(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(@RequestParam UUID artisanId, @RequestParam String date) {
+        LocalDate day = LocalDate.parse(date);
+        String message = serviceRequestService.cancelDay(artisanId, day);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }
