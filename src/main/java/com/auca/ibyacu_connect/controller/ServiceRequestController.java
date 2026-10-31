@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -111,5 +115,17 @@ public class ServiceRequestController {
         LocalDate day = LocalDate.parse(date);
         String message = serviceRequestService.cancelDay(artisanId, day);
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<ServiceRequest>> getServiceRequestsPage(@RequestParam int page, @RequestParam int size,
+            @RequestParam String sort) {
+        String[] sortParts = sort.split(",");
+        Sort sorting = Sort.by(sortParts[0]).ascending();
+        if (sortParts.length > 1 && sortParts[1].equalsIgnoreCase("desc")) {
+            sorting = Sort.by(sortParts[0]).descending();
+        }
+        Pageable pageable = PageRequest.of(page, size, sorting);
+        return new ResponseEntity<>(serviceRequestService.getServiceRequestsPage(pageable), HttpStatus.OK);
     }
 }

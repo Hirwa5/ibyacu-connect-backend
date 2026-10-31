@@ -32,4 +32,8 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
             + "AND s.status <> com.auca.ibyacu_connect.model.RequestStatus.FINISHED")
     int cancelDay(@Param("artisanId") UUID artisanId, @Param("requestDate") LocalDate requestDate);
 
+    long countByStatus(RequestStatus status);
+
+    long countByRequestDate(LocalDate requestDate);
+
 }

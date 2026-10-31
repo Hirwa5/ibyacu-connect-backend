@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -112,5 +114,9 @@ public class ServiceRequestService {
     public String cancelDay(UUID artisanId, LocalDate date) {
         int cancelled = serviceRequestRepository.cancelDay(artisanId, date);
         return cancelled + " service requests cancelled";
+    }
+
+    public Page<ServiceRequest> getServiceRequestsPage(Pageable pageable) {
+        return serviceRequestRepository.findAll(pageable);
     }
 }
